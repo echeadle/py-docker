@@ -1,0 +1,18 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - APP_ENV=development
+    environment:
+      OPEN_AI_API_KEY: /run/secrets/openai_api_key
+    secrets:
+      - openai_api_key
+    volumes:
+      - ./app:/app
+    command: ["tail", "-F", "/dev/null"]
+
+secrets:
+  openai_api_key:
+    file: ./secrets/openai_api_key.txt
